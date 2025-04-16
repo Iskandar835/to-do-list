@@ -19,9 +19,7 @@ displayBodyBackground(
   "./images/prairie.jpg"
 );
 
-const todosData = {
-  todos: [],
-};
+const todosData = [];
 
 function buildTodo(id) {
   const todoManager = document.createElement("div");
@@ -63,12 +61,30 @@ function NewTodo() {
 
   buttonPlus.addEventListener("click", () => {
     indicator.style.display = "none";
-    const newTodo = buildTodo(Date.now());
+
+    const todoId = Date.now();
+    const newTodo = buildTodo(todoId);
     allTodosContainer.appendChild(newTodo);
 
     const input = newTodo.querySelector(".input-adder");
     if (input) {
       input.focus();
+
+      input.addEventListener("change", () => {
+        const existingTodo = todosData.find((todo) => todo.id === todoId);
+        console.log(todosData);
+
+        if (existingTodo) {
+          existingTodo.text = input.value;
+        } else {
+          const todoParams = {
+            id: todoId,
+            text: input.value,
+            checked: false,
+          };
+          todosData.push(todoParams);
+        }
+      });
     }
   });
 }
