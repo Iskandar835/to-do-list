@@ -23,9 +23,10 @@ const todosData = {
   todos: [],
 };
 
-function buildTodo() {
+function buildTodo(id) {
   const todoManager = document.createElement("div");
   todoManager.classList.add("todo-manager");
+  todoManager.id = `id-${id}`;
 
   const theTodo = document.createElement("div");
   theTodo.classList.add("the-todo");
@@ -34,13 +35,12 @@ function buildTodo() {
   labelCheck.classList.add("checkbox-container");
   const inputCheck = document.createElement("input");
   inputCheck.type = "checkbox";
-  inputCheck.id = "test";
   const spanCheck = document.createElement("span");
   spanCheck.classList.add("custom-checkbox");
 
   const inputAdder = document.createElement("input");
   inputAdder.type = "text";
-  inputAdder.id = "input-adder";
+  inputAdder.classList.add("input-adder");
 
   const btnDeleteTodo = document.createElement("i");
   btnDeleteTodo.classList.add("fa-solid", "fa-trash-can");
@@ -56,34 +56,21 @@ function buildTodo() {
   return todoManager;
 }
 
-function addNewTodo() {
-  const inputAdd = document.getElementById("input-adder");
-  if (inputAdd) {
-    inputAdd.addEventListener("change", () => {
-      inputAddValue = {
-        id: new Date().getTime(),
-        text: inputAdd.value,
-        completed: false,
-      };
-      todosData.todos.push(inputAddValue);
-      console.log(todosData.todos);
-    });
-  } else {
-    console.error(
-      "WARNING: #input-adder is not available, check function saveTodo"
-    );
-  }
-}
+function NewTodo() {
+  const buttonPlus = document.getElementById("btn-add-todo");
+  const indicator = document.querySelector(".indicator");
+  const allTodosContainer = document.querySelector(".all-todos-container");
 
-function displayTodoField() {
-  const btnAdd = document.getElementById("btn-add-todo");
-  const todoContainer = document.querySelector(".all-todos-container");
+  buttonPlus.addEventListener("click", () => {
+    indicator.style.display = "none";
+    const newTodo = buildTodo(Date.now());
+    allTodosContainer.appendChild(newTodo);
 
-  btnAdd.addEventListener("click", () => {
-    todoContainer.innerText = "";
-    todoContainer.appendChild(buildTodo());
-    addNewTodo();
+    const input = newTodo.querySelector(".input-adder");
+    if (input) {
+      input.focus();
+    }
   });
 }
 
-displayTodoField();
+NewTodo();
