@@ -90,6 +90,11 @@ main {
 .todo-manager:hover {
   border: 2px solid rgb(70, 95, 117);
 }
+
+.todo-manager:focus-within {
+  border: 2px solid rgb(70, 95, 117);
+}
+
 .todo-manager:hover #btn-delete-todo {
   display: block;
 }
@@ -100,7 +105,7 @@ main {
   gap: 10px;
 }
 
-#input-adder {
+.input-adder {
   all: unset;
 }
 
