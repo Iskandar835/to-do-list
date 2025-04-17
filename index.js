@@ -54,7 +54,7 @@ function buildTodo(id) {
   return todoManager;
 }
 
-function NewTodo() {
+function addNewTodo() {
   const buttonPlus = document.getElementById("btn-add-todo");
   const indicator = document.querySelector(".indicator");
   const allTodosContainer = document.querySelector(".all-todos-container");
@@ -72,7 +72,7 @@ function NewTodo() {
 
       input.addEventListener("change", () => {
         const existingTodo = todosData.find((todo) => todo.id === todoId);
-        console.log(todosData);
+        // console.log(todosData);
 
         if (existingTodo) {
           existingTodo.text = input.value;
@@ -83,10 +83,31 @@ function NewTodo() {
             checked: false,
           };
           todosData.push(todoParams);
+          localStorage.setItem("all-todos", JSON.stringify(todosData));
         }
       });
     }
   });
 }
 
-NewTodo();
+addNewTodo();
+
+function hydrateTodosFromLocalStorage() {
+  const saved = localStorage.getItem("all-todos");
+  if (!saved) return;
+
+  const todos = JSON.parse(saved);
+
+  const container = document.querySelector(".all-todos-container");
+  const indicator = container.querySelector(".indicator");
+  indicator.style.display = "none";
+
+  todos.forEach((todo) => {
+    const todoEl = buildTodo(todo.id);
+    const input = todoEl.querySelector(".input-adder");
+    input.value = todo.text;
+    container.appendChild(todoEl);
+  });
+}
+
+hydrateTodosFromLocalStorage();
