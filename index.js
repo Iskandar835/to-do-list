@@ -105,8 +105,7 @@ function hydrateTodosFromLocalStorage() {
   todosData = todos;
 
   const container = document.querySelector(".all-todos-container");
-  const indicator = container.querySelector(".indicator");
-  indicator.style.display = "none";
+  indicator();
 
   todos.forEach((todo) => {
     const todoEl = buildTodo(todo.id);
@@ -125,6 +124,16 @@ function handleDeleteTodos(id) {
   }
 
   todosData = todosData.filter((todo) => todo.id !== id);
+  saveTodos();
+  indicator();
+}
 
-  localStorage.setItem("all-todos", JSON.stringify(todosData));
+function indicator() {
+  const indicator = document.querySelector(".indicator");
+  if (todosData.length === 0) {
+    indicator.style.display = "inline";
+  }
+  if (todosData.length >= 1) {
+    indicator.style.display = "none";
+  }
 }
