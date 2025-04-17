@@ -19,8 +19,6 @@ displayBodyBackground(
   "./images/prairie.jpg"
 );
 
-const todosData = [];
-
 function buildTodo(id) {
   const todoManager = document.createElement("div");
   todoManager.classList.add("todo-manager");
@@ -43,6 +41,7 @@ function buildTodo(id) {
   const btnDeleteTodo = document.createElement("i");
   btnDeleteTodo.classList.add("fa-solid", "fa-trash-can");
   btnDeleteTodo.id = "btn-delete-todo";
+  btnDeleteTodo.addEventListener("click", () => handleDeleteTodos(id));
 
   labelCheck.appendChild(inputCheck);
   labelCheck.appendChild(spanCheck);
@@ -52,6 +51,12 @@ function buildTodo(id) {
   todoManager.appendChild(btnDeleteTodo);
 
   return todoManager;
+}
+
+let todosData = [];
+
+function saveTodos() {
+  localStorage.setItem("all-todos", JSON.stringify(todosData));
 }
 
 function addNewTodo() {
@@ -72,10 +77,10 @@ function addNewTodo() {
 
       input.addEventListener("change", () => {
         const existingTodo = todosData.find((todo) => todo.id === todoId);
-        // console.log(todosData);
 
         if (existingTodo) {
           existingTodo.text = input.value;
+          saveTodos();
         } else {
           const todoParams = {
             id: todoId,
@@ -83,7 +88,7 @@ function addNewTodo() {
             checked: false,
           };
           todosData.push(todoParams);
-          localStorage.setItem("all-todos", JSON.stringify(todosData));
+          saveTodos();
         }
       });
     }
@@ -97,6 +102,7 @@ function hydrateTodosFromLocalStorage() {
   if (!saved) return;
 
   const todos = JSON.parse(saved);
+  todosData = todos;
 
   const container = document.querySelector(".all-todos-container");
   const indicator = container.querySelector(".indicator");
@@ -111,3 +117,14 @@ function hydrateTodosFromLocalStorage() {
 }
 
 hydrateTodosFromLocalStorage();
+
+function handleDeleteTodos(id) {
+  const todoEl = document.getElementById(`id-${id}`);
+  if (todoEl) {
+    todoEl.remove();
+  }
+
+  todosData = todosData.filter((todo) => todo.id !== id);
+
+  localStorage.setItem("all-todos", JSON.stringify(todosData));
+}
