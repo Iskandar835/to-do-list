@@ -6,17 +6,11 @@ function displayBodyBackground(element, path) {
   });
 }
 
-displayBodyBackground(
-  document.getElementById("bgOne"),
-  "./images/montain1.jpg"
-);
-displayBodyBackground(
-  document.getElementById("bgTwo"),
-  "./images/montain2.jpg"
-);
+displayBodyBackground(document.getElementById("bgOne"), "./images/ecran1.jpg");
+displayBodyBackground(document.getElementById("bgTwo"), "./images/ecran2.jpg");
 displayBodyBackground(
   document.getElementById("bgThree"),
-  "./images/prairie.jpg"
+  "./images/ecran3.jpg"
 );
 
 function buildTodo(id) {
