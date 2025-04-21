@@ -109,6 +109,11 @@ main {
   all: unset;
 }
 
+.is-checked {
+  text-decoration: line-through;
+  color: #adadad;
+}
+
 #btn-delete-todo {
   display: none;
   cursor: pointer;
@@ -156,6 +161,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  transition: all 150ms ease-in;
 }
 
 .title-todo {

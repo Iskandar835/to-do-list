@@ -31,6 +31,7 @@ function buildTodo(id) {
   labelCheck.classList.add("checkbox-container");
   const inputCheck = document.createElement("input");
   inputCheck.type = "checkbox";
+  inputCheck.addEventListener("change", () => handleCheckedTodos(id));
   const spanCheck = document.createElement("span");
   spanCheck.classList.add("custom-checkbox");
 
@@ -109,6 +110,15 @@ function hydrateTodosFromLocalStorage() {
 
   todos.forEach((todo) => {
     const todoEl = buildTodo(todo.id);
+    const checkbox = todoEl.querySelector('input[type="checkbox"]');
+    const todoText = todoEl.querySelector(".input-adder");
+    checkbox.checked = todo.checked;
+    if (checkbox.checked === true) {
+      todoText.classList.add("is-checked");
+    }
+    if (checkbox.checked === false) {
+      todoText.classList.remove("is-checked");
+    }
     const input = todoEl.querySelector(".input-adder");
     input.value = todo.text;
     container.appendChild(todoEl);
@@ -135,5 +145,23 @@ function indicator() {
   }
   if (todosData.length >= 1) {
     indicator.style.display = "none";
+  }
+}
+
+function handleCheckedTodos(id) {
+  const todoEl = document.getElementById(`id-${id}`);
+  const checkbox = todoEl.querySelector('input[type="checkbox"]');
+  const todoText = todoEl.querySelector(".input-adder");
+
+  const todo = todosData.find((t) => t.id === id);
+  if (todo) {
+    todo.checked = checkbox.checked;
+    if (checkbox.checked === true) {
+      todoText.classList.add("is-checked");
+    }
+    if (checkbox.checked === false) {
+      todoText.classList.remove("is-checked");
+    }
+    saveTodos();
   }
 }
