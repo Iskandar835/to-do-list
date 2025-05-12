@@ -1,6 +1,6 @@
 # ✅ Todolist en Vanilla JS
 
-Une petite todolist minimaliste faite avec **HTML**, **CSS** et **JavaScript**
+Une petite todolist minimaliste desktop only faite avec **HTML**, **CSS** et **JavaScript**
 
 ## ✨ Fonctionnalités
 
