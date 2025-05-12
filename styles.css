@@ -79,7 +79,6 @@ main {
 
 .todo-manager {
    display: flex;
-   justify-content: space-between;
    align-items: center;
    padding: 10px;
    width: 100%;
@@ -104,6 +103,7 @@ main {
    display: flex;
    align-items: center;
    gap: 10px;
+   width: 100%;
 }
 
 .input-adder {
